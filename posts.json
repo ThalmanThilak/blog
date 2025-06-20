@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Product Management in the AI Era",
+    "date": "June 22, 2025",
+    "excerpt": "How artificial intelligence is fundamentally changing product management practices and decision-making processes.",
+    "url": "/blog/product-management-ai-era.html"
+  },
+  {
+    "title": "Building Global Teams: Stuttgart to Bengaluru",
+    "date": "June 21, 2025", 
+    "excerpt": "Key lessons from managing international software rollouts across different time zones, cultures, and languages.",
+    "url": "/blog/building-global-teams.html"
+  },
+  {
+    "title": "The Future of Software Rollouts",
+    "date": "June 20, 2025",
+    "excerpt": "Exploring how to balance automation with human oversight in modern software deployment strategies.",
+    "url": "/blog/future-software-rollouts.html"
+  }
+]
