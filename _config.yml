@@ -3,6 +3,7 @@ description: "Product Manager, Rollout Specialist, AI Enthusiast"
 author:
   name: "Thalman Thilak"
 baseurl: "/blog"
+
 markdown: kramdown
 theme: minima
 plugins:
