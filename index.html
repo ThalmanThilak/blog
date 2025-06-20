@@ -474,25 +474,17 @@
     <section id="blog" class="blog-section">
         <div class="container">
             <h2 class="section-title">Latest Posts</h2>
-            <div class="blog-grid">
-                <!-- Blog posts will be added here manually -->
-                <!-- You can copy this template for each new post -->
-                <!--
-                <article class="blog-card">
-                    <h3>Your Post Title</h3>
-                    <div class="date">Month Day, Year</div>
-                    <p>Brief excerpt of your post content goes here...</p>
-                    <a href="/blog/your-post-url.html" class="read-more">Read More →</a>
-                </article>
-                -->
+            <div class="blog-grid" id="blog-posts">
+                <!-- Posts will be loaded dynamically via JavaScript -->
                 
-                <!-- Welcome card -->
+                <!-- Welcome card (always visible) -->
                 <div class="blog-card">
                     <h3>Welcome to My Blog</h3>
                     <div class="date">June 20, 2025</div>
                     <p>Thanks for visiting! I'll be sharing my thoughts on various topics including product management, technology, and professional insights. Stay tuned for upcoming posts!</p>
                     <a href="#contact" class="read-more">Get in Touch →</a>
                 </div>
+                
             </div>
         </div>
     </section>
@@ -611,6 +603,51 @@
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
+        });
+
+        // Load blog posts dynamically
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('/blog/posts.json');
+                if (!response.ok) {
+                    console.log('No posts.json file found - that\s okay for now');
+                    return;
+                }
+                
+                const posts = await response.json();
+                const blogGrid = document.getElementById('blog-posts');
+                const welcomeCard = blogGrid.querySelector('.blog-card');
+                
+                // Add posts before welcome card
+                posts.forEach(post => {
+                    const postCard = document.createElement('article');
+                    postCard.className = 'blog-card';
+                    postCard.innerHTML = `
+                        <h3>${post.title}</h3>
+                        <div class="date">${post.date}</div>
+                        <p>${post.excerpt}</p>
+                        <a href="${post.url}" class="read-more">Read More →</a>
+                    `;
+                    
+                    // Add hover effects to dynamically created cards
+                    postCard.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-10px) scale(1.02)';
+                    });
+                    
+                    postCard.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    });
+                    
+                    blogGrid.insertBefore(postCard, welcomeCard);
+                });
+            } catch (error) {
+                console.log('Posts loading failed - using static content');
+            }
+        }
+
+        // Load posts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlogPosts();
         });
     </script>
 </body>
