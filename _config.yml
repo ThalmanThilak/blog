@@ -1,11 +1,9 @@
-title: "Thalman Thilak - Blog"
-description: "Product Manager, Rollout Specialist, AI Enthusiast"
+title: "Thalman Thilak"
+description: "My thoughts on various topics"
 author: "Thalman Thilak"
 baseurl: "/blog"
 
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
-minimal_mistakes_skin: "dark"
 plugins:
   - jekyll-feed
   - jekyll-sitemap
