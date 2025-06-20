@@ -234,6 +234,12 @@
             background: var(--secondary-bg);
         }
 
+        /* All Posts Section */
+        .all-posts-section {
+            padding: 5rem 0;
+            background: var(--primary-bg);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -330,6 +336,49 @@
             text-shadow: 0 0 10px var(--accent-yellow-glow);
         }
 
+        /* Posts List Styles */
+        .posts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .post-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .post-item:hover {
+            border-color: var(--accent-yellow);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-item h4 {
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .post-item .post-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .post-item .post-summary {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
         /* Contact Section */
         .contact-section {
             padding: 5rem 0;
@@ -422,6 +471,11 @@
                 grid-template-columns: 1fr;
             }
             
+            .posts-list {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
             .contact-links {
                 gap: 0.5rem;
                 justify-content: center;
@@ -453,7 +507,8 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#blog">Blog</a></li>
+                <li><a href="#blog">Latest</a></li>
+                <li><a href="#all-posts">All Posts</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><button class="theme-toggle" onclick="toggleTheme()">🌓</button></li>
             </ul>
@@ -474,8 +529,8 @@
     <section id="blog" class="blog-section">
         <div class="container">
             <h2 class="section-title">Latest Posts</h2>
-            <div class="blog-grid" id="blog-posts">
-                <!-- Posts will be loaded dynamically via JavaScript -->
+            <div class="blog-grid" id="latest-posts">
+                <!-- Latest 6 posts will be loaded here -->
                 
                 <!-- Welcome card (always visible) -->
                 <div class="blog-card">
@@ -485,6 +540,16 @@
                     <a href="#contact" class="read-more">Get in Touch →</a>
                 </div>
                 
+            </div>
+        </div>
+    </section>
+
+    <!-- Browse All Posts Section -->
+    <section id="all-posts" class="all-posts-section">
+        <div class="container">
+            <h2 class="section-title">Browse All Posts</h2>
+            <div class="posts-list" id="all-posts-list">
+                <!-- All post titles will be loaded here -->
             </div>
         </div>
     </section>
@@ -615,34 +680,75 @@
                 }
                 
                 const posts = await response.json();
-                const blogGrid = document.getElementById('blog-posts');
-                const welcomeCard = blogGrid.querySelector('.blog-card');
                 
-                // Add posts before welcome card
-                posts.forEach(post => {
-                    const postCard = document.createElement('article');
-                    postCard.className = 'blog-card';
-                    postCard.innerHTML = `
-                        <h3>${post.title}</h3>
-                        <div class="date">${post.date}</div>
-                        <p>${post.excerpt}</p>
-                        <a href="${post.url}" class="read-more">Read More →</a>
-                    `;
-                    
-                    // Add hover effects to dynamically created cards
-                    postCard.addEventListener('mouseenter', function() {
-                        this.style.transform = 'translateY(-10px) scale(1.02)';
-                    });
-                    
-                    postCard.addEventListener('mouseleave', function() {
-                        this.style.transform = 'translateY(0) scale(1)';
-                    });
-                    
-                    blogGrid.insertBefore(postCard, welcomeCard);
-                });
+                // Load latest 6 posts in the main section
+                loadLatestPosts(posts.slice(0, 6));
+                
+                // Load all posts in the browse section
+                loadAllPostsList(posts);
+                
             } catch (error) {
                 console.log('Posts loading failed - using static content');
             }
+        }
+
+        // Load latest posts with full cards
+        function loadLatestPosts(posts) {
+            const latestPostsGrid = document.getElementById('latest-posts');
+            const welcomeCard = latestPostsGrid.querySelector('.blog-card');
+            
+            posts.forEach(post => {
+                const postCard = document.createElement('article');
+                postCard.className = 'blog-card';
+                postCard.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <div class="date">${post.date}</div>
+                    <p>${post.excerpt}</p>
+                    <a href="${post.url}" class="read-more">Read More →</a>
+                `;
+                
+                // Add hover effects to dynamically created cards
+                postCard.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                postCard.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+                
+                latestPostsGrid.insertBefore(postCard, welcomeCard);
+            });
+        }
+
+        // Load all posts as a simple list
+        function loadAllPostsList(posts) {
+            const allPostsList = document.getElementById('all-posts-list');
+            
+            posts.forEach(post => {
+                const postItem = document.createElement('div');
+                postItem.className = 'post-item';
+                postItem.innerHTML = `
+                    <h4>${post.title}</h4>
+                    <div class="post-date">${post.date}</div>
+                    <div class="post-summary">${post.excerpt}</div>
+                `;
+                
+                // Make the entire item clickable
+                postItem.addEventListener('click', function() {
+                    window.location.href = post.url;
+                });
+                
+                // Add hover effect
+                postItem.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                postItem.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                allPostsList.appendChild(postItem);
+            });
         }
 
         // Load posts when page loads
