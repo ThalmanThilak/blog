@@ -1,0 +1,12 @@
+title: "Thalman Thilak - Blog"
+description: "Product Manager, Rollout Specialist, AI Enthusiast"
+author:
+  name: "Thalman Thilak"
+
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+paginate: 5
