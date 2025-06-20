@@ -4,7 +4,10 @@ author: "Thalman Thilak"
 baseurl: "/blog"
 
 markdown: kramdown
-theme: minima
+theme: jekyll-theme-cayman       # Modern, colorful
+theme: jekyll-theme-architect    # Professional
+theme: jekyll-theme-midnight     # Dark theme
+remote_theme: mmistakes/minimal-mistakes  # Very popular, highly customizable
 plugins:
   - jekyll-feed
   - jekyll-sitemap
