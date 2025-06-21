@@ -1,11 +1,13 @@
 ---
+layout: default
+title: Thalman Thilak - Blog
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thalman Thilak</title>
+    <title>{{ page.title }}</title>
     <style>
         :root {
             --primary-bg: #0a0a0a;
@@ -529,17 +531,26 @@
     <section id="blog" class="blog-section">
         <div class="container">
             <h2 class="section-title">Latest Posts</h2>
-            <div class="blog-grid" id="latest-posts">
-                <!-- Latest 6 posts will be loaded here -->
+            <div class="blog-grid">
+                {% assign latest_posts = site.posts | limit: 6 %}
+                {% for post in latest_posts %}
+                <article class="blog-card">
+                    <h3>{{ post.title }}</h3>
+                    <div class="date">{{ post.date | date: "%B %d, %Y" }}</div>
+                    <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                    <a href="{{ post.url | relative_url }}" class="read-more">Read More →</a>
+                </article>
+                {% endfor %}
                 
-                <!-- Welcome card (always visible) -->
+                {% if site.posts.size == 0 %}
+                <!-- Welcome card when no posts exist -->
                 <div class="blog-card">
                     <h3>Welcome to My Blog</h3>
-                    <div class="date">June 20, 2025</div>
+                    <div class="date">{{ site.time | date: "%B %d, %Y" }}</div>
                     <p>Thanks for visiting! I'll be sharing my thoughts on various topics including product management, technology, and professional insights. Stay tuned for upcoming posts!</p>
                     <a href="#contact" class="read-more">Get in Touch →</a>
                 </div>
-                
+                {% endif %}
             </div>
         </div>
     </section>
@@ -548,8 +559,22 @@
     <section id="all-posts" class="all-posts-section">
         <div class="container">
             <h2 class="section-title">Browse All Posts</h2>
-            <div class="posts-list" id="all-posts-list">
-                <!-- All post titles will be loaded here -->
+            <div class="posts-list">
+                {% for post in site.posts %}
+                <div class="post-item" onclick="window.location.href='{{ post.url | relative_url }}'">
+                    <h4>{{ post.title }}</h4>
+                    <div class="post-date">{{ post.date | date: "%B %d, %Y" }}</div>
+                    <div class="post-summary">{{ post.excerpt | strip_html | truncatewords: 25 }}</div>
+                </div>
+                {% endfor %}
+                
+                {% if site.posts.size == 0 %}
+                <div class="post-item">
+                    <h4>No posts yet</h4>
+                    <div class="post-date">Coming soon</div>
+                    <div class="post-summary">Posts will appear here automatically as they're published.</div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -580,7 +605,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Thalman Thilak. All rights reserved.</p>
+            <p>&copy; {{ site.time | date: "%Y" }} Thalman Thilak. All rights reserved.</p>
         </div>
     </footer>
 
@@ -670,90 +695,15 @@
             });
         });
 
-        // Load blog posts dynamically
-        async function loadBlogPosts() {
-            try {
-                const response = await fetch('/blog/posts.json');
-                if (!response.ok) {
-                    console.log('No posts.json file found - that\s okay for now');
-                    return;
-                }
-                
-                const posts = await response.json();
-                
-                // Load latest 6 posts in the main section
-                loadLatestPosts(posts.slice(0, 6));
-                
-                // Load all posts in the browse section
-                loadAllPostsList(posts);
-                
-            } catch (error) {
-                console.log('Posts loading failed - using static content');
-            }
-        }
-
-        // Load latest posts with full cards
-        function loadLatestPosts(posts) {
-            const latestPostsGrid = document.getElementById('latest-posts');
-            const welcomeCard = latestPostsGrid.querySelector('.blog-card');
-            
-            posts.forEach(post => {
-                const postCard = document.createElement('article');
-                postCard.className = 'blog-card';
-                postCard.innerHTML = `
-                    <h3>${post.title}</h3>
-                    <div class="date">${post.date}</div>
-                    <p>${post.excerpt}</p>
-                    <a href="${post.url}" class="read-more">Read More →</a>
-                `;
-                
-                // Add hover effects to dynamically created cards
-                postCard.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
-                
-                postCard.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-                
-                latestPostsGrid.insertBefore(postCard, welcomeCard);
+        // Enhanced hover effects for post items
+        document.querySelectorAll('.post-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
             });
-        }
-
-        // Load all posts as a simple list
-        function loadAllPostsList(posts) {
-            const allPostsList = document.getElementById('all-posts-list');
             
-            posts.forEach(post => {
-                const postItem = document.createElement('div');
-                postItem.className = 'post-item';
-                postItem.innerHTML = `
-                    <h4>${post.title}</h4>
-                    <div class="post-date">${post.date}</div>
-                    <div class="post-summary">${post.excerpt}</div>
-                `;
-                
-                // Make the entire item clickable
-                postItem.addEventListener('click', function() {
-                    window.location.href = post.url;
-                });
-                
-                // Add hover effect
-                postItem.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-3px)';
-                });
-                
-                postItem.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-                
-                allPostsList.appendChild(postItem);
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
             });
-        }
-
-        // Load posts when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadBlogPosts();
         });
     </script>
 </body>
