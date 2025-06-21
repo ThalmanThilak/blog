@@ -2,181 +2,46 @@
 layout: default
 ---
 
-<div class="post-wrapper">
-    <article class="post-article">
-        <header class="post-header">
-            <h1 class="post-title">{{ page.title }}</h1>
-            <div class="post-meta">
-                <time class="post-date">{{ page.date | date: "%B %d, %Y" }}</time>
-                {% if page.author %}
-                <span class="post-author">by {{ page.author }}</span>
-                {% endif %}
-            </div>
-            {% if page.tags and page.tags.size > 0 %}
-            <div class="post-tags">
-                {% for tag in page.tags %}
-                <span class="tag">{{ tag }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </header>
-        
-        <div class="post-content">
-            {{ content }}
+<article style="max-width: 800px; margin: 0 auto; padding: 2rem; color: var(--text-primary);">
+    <header style="text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--accent-yellow);">
+        <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2;">{{ page.title }}</h1>
+        <div style="color: var(--text-secondary); margin-bottom: 1rem;">
+            <time>{{ page.date | date: "%B %d, %Y" }}</time>
+            {% if page.author %}<span style="margin-left: 1rem;">by {{ page.author }}</span>{% endif %}
         </div>
-        
-        <footer class="post-footer">
-            <a href="{{ '/' | relative_url }}" class="btn-back">← Back to Blog</a>
-        </footer>
-    </article>
-</div>
+        {% if page.tags and page.tags.size > 0 %}
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+            {% for tag in page.tags %}
+            <span style="background: var(--accent-yellow); color: var(--primary-bg); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+    
+    <div style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 3rem;">
+        {{ content }}
+    </div>
+    
+    <footer style="text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 215, 0, 0.2);">
+        <a href="{{ '/' | relative_url }}" style="display: inline-block; color: var(--accent-yellow); text-decoration: none; font-weight: 600; padding: 0.8rem 2rem; border: 2px solid var(--accent-yellow); border-radius: 25px; transition: all 0.3s ease;">← Back to Blog</a>
+    </footer>
+</article>
 
 <style>
-.post-wrapper {
-    padding-top: 8rem;
-    padding-bottom: 5rem;
-    min-height: 100vh;
-    background: var(--primary-bg);
-}
-
-.post-article {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    color: var(--text-primary);
-}
-
-.post-header {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--accent-yellow);
-}
-
-.post-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2;
-}
-
-.post-meta {
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-}
-
-.post-author {
-    margin-left: 1rem;
-}
-
-.post-tags {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.tag {
-    background: var(--accent-yellow);
-    color: var(--primary-bg);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.post-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 3rem;
-}
-
-.post-content h1,
-.post-content h2,
-.post-content h3,
-.post-content h4 {
-    color: var(--accent-yellow);
+article h1, article h2, article h3, article h4 {
+    color: var(--accent-yellow) !important;
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
-
-.post-content h1 { font-size: 2rem; }
-.post-content h2 { font-size: 1.7rem; }
-.post-content h3 { font-size: 1.4rem; }
-
-.post-content p {
-    margin-bottom: 1.5rem;
-    color: var(--text-primary);
-}
-
-.post-content ul,
-.post-content ol {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-    color: var(--text-primary);
-}
-
-.post-content li {
-    margin-bottom: 0.5rem;
-}
-
-.post-content a {
-    color: var(--accent-yellow);
-    text-decoration: none;
-}
-
-.post-content a:hover {
-    text-decoration: underline;
-}
-
-.post-content code {
-    background: var(--secondary-bg);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    color: var(--accent-yellow);
-    font-size: 0.9rem;
-}
-
-.post-content blockquote {
-    border-left: 4px solid var(--accent-yellow);
-    padding: 1rem 2rem;
-    margin: 2rem 0;
-    background: var(--secondary-bg);
-    border-radius: 0 10px 10px 0;
-    font-style: italic;
-}
-
-.post-footer {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 215, 0, 0.2);
-}
-
-.btn-back {
-    display: inline-block;
-    color: var(--accent-yellow);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 0.8rem 2rem;
-    border: 2px solid var(--accent-yellow);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-}
-
-.btn-back:hover {
-    background: var(--accent-yellow);
-    color: var(--primary-bg);
-}
-
-@media (max-width: 768px) {
-    .post-title { font-size: 2rem; }
-    .post-content { font-size: 1rem; }
-    .post-wrapper { padding-top: 6rem; }
-}
+article h1 { font-size: 2rem; }
+article h2 { font-size: 1.7rem; }
+article h3 { font-size: 1.4rem; }
+article p { margin-bottom: 1.5rem; color: var(--text-primary); }
+article ul, article ol { margin-bottom: 1.5rem; padding-left: 2rem; color: var(--text-primary); }
+article li { margin-bottom: 0.5rem; }
+article a { color: var(--accent-yellow); text-decoration: none; }
+article a:hover { text-decoration: underline; }
+article code { background: var(--secondary-bg); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--accent-yellow); }
+article blockquote { border-left: 4px solid var(--accent-yellow); padding: 1rem 2rem; margin: 2rem 0; background: var(--secondary-bg); border-radius: 0 10px 10px 0; font-style: italic; }
 </style>
