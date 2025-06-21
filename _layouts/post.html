@@ -2,190 +2,181 @@
 layout: default
 ---
 
-<article class="post-content">
-    <div class="container">
-        <div class="post-header">
+<div class="post-wrapper">
+    <article class="post-article">
+        <header class="post-header">
             <h1 class="post-title">{{ page.title }}</h1>
             <div class="post-meta">
-                <span class="post-date">{{ page.date | date: "%B %d, %Y" }}</span>
-                {% if page.author %}<span class="post-author">by {{ page.author }}</span>{% endif %}
-                {% if page.tags and page.tags.size > 0 %}
-                <div class="post-tags">
-                    {% for tag in page.tags %}
-                    <span class="tag">{{ tag }}</span>
-                    {% endfor %}
-                </div>
+                <time class="post-date">{{ page.date | date: "%B %d, %Y" }}</time>
+                {% if page.author %}
+                <span class="post-author">by {{ page.author }}</span>
                 {% endif %}
             </div>
-        </div>
+            {% if page.tags and page.tags.size > 0 %}
+            <div class="post-tags">
+                {% for tag in page.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </header>
         
-        <div class="post-body">
+        <div class="post-content">
             {{ content }}
         </div>
         
-        <div class="post-footer">
-            <a href="{{ '/' | relative_url }}" class="back-to-home">← Back to Blog</a>
-        </div>
-    </div>
-</article>
+        <footer class="post-footer">
+            <a href="{{ '/' | relative_url }}" class="btn-back">← Back to Blog</a>
+        </footer>
+    </article>
+</div>
 
 <style>
-    .post-content {
-        padding-top: 8rem;
-        padding-bottom: 5rem;
-        background: var(--primary-bg);
-        min-height: 100vh;
-    }
+.post-wrapper {
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+    min-height: 100vh;
+    background: var(--primary-bg);
+}
 
-    .post-header {
-        text-align: center;
-        margin-bottom: 3rem;
-        padding-bottom: 2rem;
-        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-    }
+.post-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    color: var(--text-primary);
+}
 
-    .post-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 1rem;
-        line-height: 1.2;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+.post-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--accent-yellow);
+}
 
-    .post-meta {
-        color: var(--text-secondary);
-        font-size: 1rem;
-        margin-bottom: 1rem;
-    }
+.post-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
 
-    .post-author {
-        margin-left: 1rem;
-    }
+.post-meta {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
 
-    .post-tags {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-    }
+.post-author {
+    margin-left: 1rem;
+}
 
-    .tag {
-        background: var(--accent-yellow);
-        color: var(--primary-bg);
-        padding: 0.3rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
+.post-tags {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
 
-    .post-body {
-        max-width: 800px;
-        margin: 0 auto;
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: var(--text-primary);
-    }
+.tag {
+    background: var(--accent-yellow);
+    color: var(--primary-bg);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
 
-    .post-body h1,
-    .post-body h2,
-    .post-body h3,
-    .post-body h4,
-    .post-body h5,
-    .post-body h6 {
-        color: var(--accent-yellow);
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        font-weight: 600;
-    }
+.post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
 
-    .post-body h1 {
-        font-size: 2.2rem;
-        border-bottom: 2px solid var(--accent-yellow);
-        padding-bottom: 0.5rem;
-    }
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+    color: var(--accent-yellow);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
 
-    .post-body h2 {
-        font-size: 1.8rem;
-    }
+.post-content h1 { font-size: 2rem; }
+.post-content h2 { font-size: 1.7rem; }
+.post-content h3 { font-size: 1.4rem; }
 
-    .post-body h3 {
-        font-size: 1.5rem;
-    }
+.post-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
 
-    .post-body p {
-        margin-bottom: 1.5rem;
-        text-align: justify;
-    }
+.post-content ul,
+.post-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    color: var(--text-primary);
+}
 
-    .post-body ul,
-    .post-body ol {
-        margin-bottom: 1.5rem;
-        padding-left: 2rem;
-    }
+.post-content li {
+    margin-bottom: 0.5rem;
+}
 
-    .post-body li {
-        margin-bottom: 0.8rem;
-        line-height: 1.6;
-    }
+.post-content a {
+    color: var(--accent-yellow);
+    text-decoration: none;
+}
 
-    .post-body blockquote {
-        border-left: 4px solid var(--accent-yellow);
-        padding: 1rem 2rem;
-        margin: 2rem 0;
-        background: var(--secondary-bg);
-        border-radius: 0 10px 10px 0;
-        font-style: italic;
-    }
+.post-content a:hover {
+    text-decoration: underline;
+}
 
-    .post-body code {
-        background: var(--secondary-bg);
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        font-family: 'Monaco', 'Menlo', monospace;
-        font-size: 0.9rem;
-        color: var(--accent-yellow);
-    }
+.post-content code {
+    background: var(--secondary-bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: var(--accent-yellow);
+    font-size: 0.9rem;
+}
 
-    .post-footer {
-        text-align: center;
-        margin-top: 3rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 215, 0, 0.2);
-    }
+.post-content blockquote {
+    border-left: 4px solid var(--accent-yellow);
+    padding: 1rem 2rem;
+    margin: 2rem 0;
+    background: var(--secondary-bg);
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+}
 
-    .back-to-home {
-        display: inline-block;
-        color: var(--accent-yellow);
-        text-decoration: none;
-        font-weight: 600;
-        padding: 0.8rem 2rem;
-        border: 2px solid var(--accent-yellow);
-        border-radius: 25px;
-        transition: all 0.3s ease;
-    }
+.post-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
 
-    .back-to-home:hover {
-        background: var(--accent-yellow);
-        color: var(--primary-bg);
-        box-shadow: 0 0 20px var(--accent-yellow-glow);
-        transform: translateY(-2px);
-    }
+.btn-back {
+    display: inline-block;
+    color: var(--accent-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border: 2px solid var(--accent-yellow);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
 
-    @media (max-width: 768px) {
-        .post-title {
-            font-size: 2rem;
-        }
-        
-        .post-body {
-            font-size: 1rem;
-        }
-        
-        .post-content {
-            padding-top: 6rem;
-        }
-    }
+.btn-back:hover {
+    background: var(--accent-yellow);
+    color: var(--primary-bg);
+}
+
+@media (max-width: 768px) {
+    .post-title { font-size: 2rem; }
+    .post-content { font-size: 1rem; }
+    .post-wrapper { padding-top: 6rem; }
+}
 </style>
