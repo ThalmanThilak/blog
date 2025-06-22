@@ -1,7 +1,7 @@
 title: Thalman Thilak Blog
 description: My thoughts on various topics
-url: "https://thalmanthilak.github.io"
-baseurl: "/blog"
+url: "https://blog.thalmanthilak.com"
+baseurl: ""
 
 # Build settings
 markdown: kramdown
