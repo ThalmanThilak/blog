@@ -36,7 +36,7 @@ Future AI systems will incorporate episodic memory, similar to how humans rememb
 - Understand the temporal relationship between events
 - Learn from past experiences to improve future responses
 
-### 2. Semantic Memory
+### 2. Semantic Memory 
 
 Semantic memory systems will help AI models build and maintain knowledge structures that:
 
